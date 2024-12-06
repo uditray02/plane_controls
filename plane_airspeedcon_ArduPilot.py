@@ -12,8 +12,6 @@ TAKEOFF = 100
 AIRSPEED_MAX = 18  # Maximum airspeed 
 AIRSPEED_MIN = 5   # Minimum airspeed 
 AIRSPEED_CRUISE = 9  # Cruise airspeed 
-
-# Throttle settings
 THR_MAX = 50  # Maximum throttle percentage 
 TRIM_THROTTLE = 30  # Throttle percentage for level flight
 
@@ -31,16 +29,12 @@ vehicle = connect(CONNECTION_STRING, wait_ready=True)
 # =========================
 def set_flight_parameters():
     print("Setting flight parameters...")
-
-    # Set throttle max (THR_MAX)
     vehicle.parameters['THR_MAX'] = THR_MAX
     print(f" THR_MAX set to {THR_MAX}%")
-
-    # Set throttle trim (TRIM_THROTTLE)
     vehicle.parameters['TRIM_THROTTLE'] = TRIM_THROTTLE
     print(f" TRIM_THROTTLE set to {TRIM_THROTTLE}%")
 
-    # Set airspeed limits
+    #airspeed limits
     vehicle.parameters['AIRSPEED_MAX'] = AIRSPEED_MAX
     vehicle.parameters['AIRSPEED_MIN'] = AIRSPEED_MIN
     vehicle.parameters['AIRSPEED_CRUISE'] = AIRSPEED_CRUISE * 100  # Cruise airspeed in cm/s
