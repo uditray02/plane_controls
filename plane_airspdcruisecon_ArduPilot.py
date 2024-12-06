@@ -32,15 +32,12 @@ vehicle = connect(CONNECTION_STRING, wait_ready=True)
 def set_flight_parameters():
     print("Setting flight parameters...")
 
-    # Set throttle max (THR_MAX)
     vehicle.parameters['THR_MAX'] = THR_MAX
     print(f" THR_MAX set to {THR_MAX}%")
-
-    # Set throttle trim (TRIM_THROTTLE)
     vehicle.parameters['TRIM_THROTTLE'] = TRIM_THROTTLE
     print(f" TRIM_THROTTLE set to {TRIM_THROTTLE}%")
 
-    # Set airspeed limits
+    #airspeed limits
     vehicle.parameters['AIRSPEED_MAX'] = AIRSPEED_MAX
     vehicle.parameters['AIRSPEED_MIN'] = AIRSPEED_MIN
     vehicle.parameters['AIRSPEED_CRUISE'] = AIRSPEED_CRUISE 
@@ -48,7 +45,7 @@ def set_flight_parameters():
     print(f" AIRSPEED_MIN set to {AIRSPEED_MIN}")
     print(f" AIRSPEED_CRUISE set to {AIRSPEED_CRUISE } m/s")
 
-    # Set maximum pitch angle (PTCH_LIM_MAX_DEG)
+    # maximum pitch angle
     vehicle.parameters['PTCH_LIM_MAX_DEG'] = PTCH_LIM_MAX_DEG
     print(f" PTCH_LIM_MAX_DEG set to {PTCH_LIM_MAX_DEG} degrees")
 
@@ -81,21 +78,20 @@ def arm_and_takeoff(target_altitude):
         altitude = vehicle.location.global_relative_frame.alt
         print(f" Altitude: {altitude:.2f} meters")
         
-        # When the vehicle reaches 100m altitude, set airspeed to AIRSPEED_CRUISE
+        # the vehicle reaches 100m altitude, set airspeed to AIRSPEED_CRUISE
         if altitude >= target_altitude * 0.95:
             print("Target altitude reached. Setting airspeed to AIRSPEED_CRUISE...")
             vehicle.airspeed = AIRSPEED_CRUISE  # Set to cruise airspeed
             print(f" Airspeed set to {AIRSPEED_CRUISE} m/s")
 
-        # Ensure airspeed does not exceed max or min limits
+        #airspeed does not exceed max or min limits
         if vehicle.airspeed > AIRSPEED_MAX:
             vehicle.airspeed = AIRSPEED_MAX
             print(f" Airspeed limited to {AIRSPEED_MAX} m/s")
         elif vehicle.airspeed < AIRSPEED_MIN:
             vehicle.airspeed = AIRSPEED_MIN
             print(f" Airspeed limited to {AIRSPEED_MIN} m/s")
-        
-        # Exit condition: check if the altitude is close enough to the target
+            
         if altitude >= target_altitude:
             print("Takeoff successful!")
             break
